@@ -31,10 +31,7 @@
         </div>
       </base-card>
       <div class="childCommentContainer" v-if="comment.replies.length > 0">
-        <div
-          class="verticalLine"
-          :style="verticalLine(comment.replies.length)"
-        ></div>
+        <div class="verticalLine"></div>
         <base-card
           class="childCard commentCard"
           v-for="(reply, index) in comment.replies"
@@ -107,7 +104,6 @@
 </template>
 <script>
 import VoteComment from "../ui/VoteComment.vue";
-import { nextTick } from "vue";
 
 export default {
   components: {
@@ -132,26 +128,12 @@ export default {
       if (username === this.currentUser?.username) return true;
       else return false;
     },
-    verticalLine(length) {
-      const height =
-        length === 0
-          ? length * this.divHeight
-          : this.divHeight + (length - 1) * 9.7;
-      return { height: `${height}px` };
-    },
     childCard(index) {
       const marginTop = index === 0 ? 0 : 10;
       return { marginTop: `${marginTop}px !important` };
     },
     loadImage(image) {
       return require(`../../assets${image.slice(1)}`);
-    },
-    async getDivHeight() {
-      await nextTick();
-      const divHeight = this.$refs?.infoBox
-        ?.map((item) => item?.$el?.clientHeight)
-        ?.reduce((acc, curr) => acc + curr, 0);
-      this.divHeight = divHeight;
     },
   },
 };
@@ -181,6 +163,7 @@ export default {
   border-left: 2px solid var(--light-gray);
   position: absolute;
   left: 42px;
+  height: 100%;
 }
 .replyingTo {
   color: var(--primary-color);
