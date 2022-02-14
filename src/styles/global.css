@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+button,
+textarea {
+  font-family: Rubik, sans-serif;
+}
+
+input,
+button,
+textarea {
+  outline: none;
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: local("Rubik"),
+    url("../assets/fonts/Rubik-Regular.ttf") format("truetype");
+}
+
+:root {
+  --container-desktop-max-width: 1440px;
+  --container-mobile-max-width: 375px;
+  --primary-color: #5357b6;
+  --soft-red: #ed6368;
+  --pale-red: #ffb8bb;
+  --light-blue: #c5c6ef;
+  --white: #ffffff;
+  --light-gray: #e9ebf0;
+  --very-light-gray: #f5f6fa;
+  --grayish-blue: #67727e;
+  --dark-blue: #334253;
+  --border-radius: 8px;
+}
