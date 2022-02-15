@@ -8,7 +8,7 @@
       />
       <p class="delete-text">Delete</p>
     </div>
-    <div class="edit-delete-action" @click="$emit('set-selected-reply')">
+    <div class="edit-delete-action" @click="$emit('edit-my-comment')">
       <img
         class="edit-icon"
         src="../../assets/images/icon-edit.svg"
@@ -30,7 +30,7 @@
 <script>
 export default {
   props: ["isMyAccount"],
-  emits: ["set-selected-reply", "toggle-modal"],
+  emits: ["set-selected-reply", "toggle-modal", "edit-my-comment"],
 };
 </script>
 

@@ -99,11 +99,27 @@
                   :is-my-account="checkReplyActions(reply?.user?.username)"
                   @set-selected-reply="setSelectedReply(reply)"
                   @toggle-modal="toggleModal"
+                  @edit-my-comment="checkIsEditingComment(reply)"
                   class="desktopEditActions"
                 ></comment-list-actions>
               </div>
               <div class="cardRightBottom">
-                <p class="commentText childCommentText">
+                <div
+                  v-if="
+                    isEditingComment && checkReplyActions(reply?.user?.username)
+                  "
+                >
+                  <textarea
+                    placeholder="Add a comment..."
+                    name="comment"
+                    id="comment"
+                    v-model.trim="enteredText"
+                  ></textarea>
+                  <base-button class="update-comment-button" @click="submitForm"
+                    >Update</base-button
+                  >
+                </div>
+                <p class="commentText childCommentText" v-else>
                   <span class="replyingTo">@{{ reply.replyingTo }}</span>
                   {{ reply.content }}
                 </p>
@@ -143,11 +159,12 @@ export default {
       selectedReply: {},
       isReplyActive: false,
       isModalVisible: false,
+      isEditingComment: false,
+      enteredText: "",
     };
   },
   computed: {
     checkReplyContent() {
-      console.log(this.selectedReply);
       if (this.selectedReply?.user?.username === this.currentUser?.username) {
         return `@${this.selectedReply?.replyingTo} ${this.selectedReply?.content}`;
       } else {
@@ -155,6 +172,7 @@ export default {
       }
     },
   },
+
   methods: {
     checkCommentForm(commentId) {
       return this.selectedReply?.id === commentId && this.isReplyActive;
@@ -190,6 +208,15 @@ export default {
     },
     deleteComment() {
       this.isModalVisible = !this.isModalVisible;
+    },
+    checkIsEditingComment(replyData) {
+      this.selectedReply = replyData;
+      this.isEditingComment = !this.isEditingComment;
+      this.enteredText = `@${replyData?.replyingTo} ${replyData?.content}`;
+    },
+    submitForm() {
+      console.log(this.enteredText);
+      this.isEditingComment = false;
     },
   },
 };

@@ -147,6 +147,33 @@
   display: none !important;
 }
 
+textarea {
+  flex: 1;
+  min-height: 96px;
+  width: 100%;
+  border-radius: var(--border-radius);
+  border-color: var(--light-gray);
+  background-color: transparent;
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  resize: none;
+  color: var(--dark-blue);
+  line-height: 1.7;
+  padding-right: 10px;
+  font-weight: 400;
+  font-size: 15px;
+}
+textarea::-webkit-input-placeholder {
+  color: var(--grayish-blue);
+}
+
+.update-comment-button {
+  margin-left: auto;
+  display: block;
+  margin-top: 7px;
+}
+
 @media only screen and (max-width: 480px) {
   .verticalLine {
     left: 5px;
