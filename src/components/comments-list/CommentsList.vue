@@ -16,7 +16,7 @@
               <p class="username">{{ comment?.user?.username }}</p>
               <p class="createdAt">{{ comment?.createdAt }}</p>
             </div>
-            <div class="replyContainer">
+            <div class="replyContainer" @click="setSelectedReply(comment)">
               <img
                 class="replyImage"
                 src="../../assets/images/icon-reply.svg"
@@ -30,99 +30,124 @@
           </div>
         </div>
       </base-card>
+      <make-comment
+        v-if="checkCommentForm(comment?.id)"
+        class="replyCommentContainer"
+        :currentUser="currentUser"
+        button-text="Reply"
+      ></make-comment>
       <div class="childCommentContainer" v-if="comment.replies.length > 0">
         <div class="verticalLine"></div>
-        <base-card
-          class="childCard commentCard"
-          v-for="(reply, index) in comment.replies"
-          :key="reply.id"
-          :style="childCard(index)"
-          ref="infoBox"
-        >
-          <div class="cardLeft">
-            <vote-comment :comment-score="comment.score"></vote-comment>
-          </div>
-          <div class="cardRight">
-            <div class="cardRightTop">
-              <div class="userImageContainer">
-                <img
-                  :src="loadImage(reply?.user?.image?.png)"
-                  alt="user"
-                  class="userImage"
-                />
-                <p class="username" :style="checkMargin(reply?.user?.username)">
-                  {{ reply?.user?.username }}
-                </p>
-                <span
-                  class="userBadge"
+        <template v-for="(reply, index) in comment.replies" :key="reply.id">
+          <base-card class="childCard commentCard" :style="childCard(index)">
+            <div class="cardLeft">
+              <vote-comment :comment-score="comment.score"></vote-comment>
+            </div>
+            <div class="cardRight">
+              <div class="cardRightTop">
+                <div class="userImageContainer">
+                  <img
+                    :src="loadImage(reply?.user?.image?.png)"
+                    alt="user"
+                    class="userImage"
+                  />
+                  <p
+                    class="username"
+                    :style="checkMargin(reply?.user?.username)"
+                  >
+                    {{ reply?.user?.username }}
+                  </p>
+                  <span
+                    class="userBadge"
+                    v-if="checkReplyActions(reply?.user?.username)"
+                    >you</span
+                  >
+                  <p class="createdAt">{{ reply?.createdAt }}</p>
+                </div>
+                <div
                   v-if="checkReplyActions(reply?.user?.username)"
-                  >you</span
+                  class="editDeleteContainer"
                 >
-                <p class="createdAt">{{ reply?.createdAt }}</p>
-              </div>
-              <div
-                v-if="checkReplyActions(reply?.user?.username)"
-                class="editDeleteContainer"
-              >
-                <div class="editDeleteAction">
-                  <img
-                    class="deleteIcon"
-                    src="../../assets/images/icon-delete.svg"
-                    alt="delete"
-                  />
-                  <p class="deleteText">Delete</p>
+                  <div class="editDeleteAction">
+                    <img
+                      class="deleteIcon"
+                      src="../../assets/images/icon-delete.svg"
+                      alt="delete"
+                    />
+                    <p class="deleteText">Delete</p>
+                  </div>
+                  <div
+                    class="editDeleteAction"
+                    @click="setSelectedReply(reply)"
+                  >
+                    <img
+                      class="editIcon"
+                      src="../../assets/images/icon-edit.svg"
+                      alt="delete"
+                    />
+                    <p class="editText">Edit</p>
+                  </div>
                 </div>
-                <div class="editDeleteAction">
+                <div
+                  class="replyContainer"
+                  v-else
+                  @click="setSelectedReply(reply)"
+                >
                   <img
-                    class="editIcon"
-                    src="../../assets/images/icon-edit.svg"
-                    alt="delete"
+                    class="replyImage"
+                    src="../../assets/images/icon-reply.svg"
+                    alt="reply"
                   />
-                  <p class="editText">Edit</p>
+                  <p class="replyText">Reply</p>
                 </div>
               </div>
-              <div class="replyContainer" v-else>
-                <img
-                  class="replyImage"
-                  src="../../assets/images/icon-reply.svg"
-                  alt="reply"
-                />
-                <p class="replyText">Reply</p>
+              <div class="cardRightBottom">
+                <p class="commentText childCommentText">
+                  <span class="replyingTo">@{{ reply.replyingTo }}</span>
+                  {{ reply.content }}
+                </p>
               </div>
             </div>
-            <div class="cardRightBottom">
-              <p class="commentText childCommentText">
-                <span class="replyingTo">@{{ reply.replyingTo }}</span>
-                {{ reply.content }}
-              </p>
-            </div>
-          </div>
-        </base-card>
+          </base-card>
+          <make-comment
+            v-if="checkCommentForm(reply?.id)"
+            class="replyCommentChildContainer"
+            :currentUser="currentUser"
+            :button-text="isMyAccount(reply?.user.username) ? 'Edit' : 'Reply'"
+          ></make-comment>
+        </template>
       </div>
     </template>
   </div>
 </template>
 <script>
 import VoteComment from "../ui/VoteComment.vue";
+import MakeComment from "../MakeComment.vue";
 
 export default {
   components: {
     VoteComment,
+    MakeComment,
   },
   props: ["comments", "currentUser"],
-  mounted() {
-    this.getDivHeight();
-  },
   data() {
     return {
       divHeight: 0,
+      selectedReply: {},
+      isReplyActive: false,
     };
   },
   methods: {
+    checkCommentForm(commentId) {
+      return this.selectedReply?.id === commentId && this.isReplyActive;
+    },
     checkMargin(username) {
       return {
-        marginRight: username === this.currentUser?.username ? "6px" : "15px",
+        marginRight: this.isMyAccount(username) ? "6px" : "15px",
       };
+    },
+    isMyAccount(username) {
+      return username === this.currentUser?.username;
     },
     checkReplyActions(username) {
       if (username === this.currentUser?.username) return true;
@@ -134,6 +159,13 @@ export default {
     },
     loadImage(image) {
       return require(`../../assets${image.slice(1)}`);
+    },
+    setSelectedReply(replyData) {
+      this.selectedReply = replyData;
+      this.isReplyActive = !this.isReplyActive;
+      if (!this.isReplyActive) {
+        this.selectedReply = {};
+      }
     },
   },
 };
@@ -276,5 +308,13 @@ export default {
   border-radius: 2px;
   width: 36px;
   height: 19px;
+}
+.replyCommentContainer {
+  margin-top: 10px;
+}
+
+.replyCommentChildContainer {
+  margin-top: 10px;
+  margin-left: 80px;
 }
 </style>

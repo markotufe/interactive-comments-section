@@ -2,16 +2,16 @@
   <div class="make-comment">
     <img :src="loadImage" alt="juliu somo" />
     <textarea placeholder="Add a comment..."></textarea>
-    <base-button>Send</base-button>
+    <base-button>{{ buttonText ?? "Send" }}</base-button>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["currentUser"],
+  props: ["currentUser", "buttonText"],
   computed: {
     loadImage() {
-      return require(`../assets${this.currentUser.image.png.slice(1)}`);
+      return require(`../assets${this.currentUser?.image?.png?.slice(1)}`);
     },
   },
 };
