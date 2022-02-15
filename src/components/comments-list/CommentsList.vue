@@ -1,27 +1,27 @@
 <template>
   <teleport to="body">
     <base-modal @close="toggleModal" :open="isModalVisible">
-      <div class="modalContent">
-        <h2 class="modalHeading">Delete comment</h2>
-        <p class="modalText">
+      <div class="modal-content">
+        <h2 class="modal-heading">Delete comment</h2>
+        <p class="modal-text">
           Are you sure you want to delete this comment? This will remove the
           comment and can’t be undone.
         </p>
       </div>
 
-      <div class="modalButtons">
-        <base-button @click="toggleModal" class="modalButton cancelButton">
+      <div class="modal-buttons">
+        <base-button @click="toggleModal" class="modal-button cancel-button">
           No, cancel
         </base-button>
-        <base-button @click="deleteComment" class="modalButton deleteButton">
+        <base-button @click="deleteComment" class="modal-button delete-button">
           Yes, delete
         </base-button>
       </div>
     </base-modal>
   </teleport>
-  <div class="comments">
+  <div class="comments-part">
     <template v-for="comment in comments" :key="comment.id">
-      <base-card class="commentCard">
+      <comment-card class="commentCard">
         <div class="cardLeft">
           <vote-comment :comment-score="comment.score"></vote-comment>
           <comment-list-actions
@@ -53,7 +53,7 @@
             <p class="commentText parentCommentText">{{ comment.content }}</p>
           </div>
         </div>
-      </base-card>
+      </comment-card>
       <make-comment
         v-if="checkCommentForm(comment?.id)"
         class="replyCommentContainer"
@@ -63,7 +63,7 @@
       <div class="childCommentContainer" v-if="comment.replies.length > 0">
         <div class="verticalLine"></div>
         <template v-for="(reply, index) in comment.replies" :key="reply.id">
-          <base-card class="childCard commentCard" :style="childCard(index)">
+          <comment-card class="childCard commentCard" :style="childCard(index)">
             <div class="cardLeft">
               <vote-comment :comment-score="comment.score"></vote-comment>
               <comment-list-actions
@@ -108,7 +108,7 @@
                 </p>
               </div>
             </div>
-          </base-card>
+          </comment-card>
           <make-comment
             v-if="checkCommentForm(reply?.id)"
             class="replyCommentChildContainer"
@@ -121,15 +121,17 @@
   </div>
 </template>
 <script>
-import VoteComment from "../ui/VoteComment.vue";
+import VoteComment from "./VoteComment.vue";
 import MakeComment from "./MakeComment.vue";
 import CommentListActions from "./CommentListActions.vue";
+import CommentCard from "./CommentCard.vue";
 
 export default {
   components: {
     VoteComment,
     MakeComment,
     CommentListActions,
+    CommentCard,
   },
   props: ["comments", "currentUser"],
   data() {
@@ -180,7 +182,7 @@ export default {
 };
 </script>
 <style>
-.comments {
+.comments-part {
   flex: 1;
   overflow-y: scroll;
   margin-bottom: 20px;
@@ -280,14 +282,14 @@ export default {
   margin-left: 80px;
 }
 
-.modalHeading {
+.modal-heading {
   font-size: 20px;
   color: var(--dark-blue);
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.modalText {
+.modal-text {
   font-weight: normal;
   font-size: 14px;
   line-height: 1.7;
@@ -295,34 +297,34 @@ export default {
   color: var(--grayish-blue);
 }
 
-.modalButtons {
+.modal-buttons {
   margin-top: 20px;
   display: flex;
 }
 
-.modalButton {
+.modal-button {
   width: 161px;
   font-size: 14px;
 }
 
-.modalButton:nth-child(1) {
+.modal-button:nth-child(1) {
   margin-right: 10px;
 }
 
-.cancelButton {
+.cancel-button {
   background-color: var(--grayish-blue) !important;
 }
 
-.deleteButton {
+.cancel-button:active {
+  background-color: var(--light-gray) !important;
+}
+
+.delete-button {
   background-color: var(--soft-red) !important;
 }
 
-.deleteButton:active {
+.delete-button:active {
   background-color: var(--pale-red) !important;
-}
-
-.cancelButton:active {
-  background-color: var(--light-gray) !important;
 }
 
 .mobileEditActions {
@@ -373,11 +375,11 @@ export default {
     display: none !important;
   }
 
-  .modalButton {
+  .modal-button {
     width: 138px;
   }
 
-  .modalButton:nth-child(1) {
+  .modal-button:nth-child(1) {
     margin-right: 5px;
   }
 

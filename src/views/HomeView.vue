@@ -4,10 +4,7 @@
       :comments="this.comments"
       :current-user="this.currentUser"
     ></comments-list>
-    <make-comment
-      button-text="Send"
-      :current-user="this.currentUser"
-    ></make-comment>
+    <make-comment :current-user="this.currentUser"></make-comment>
   </div>
 </template>
 
