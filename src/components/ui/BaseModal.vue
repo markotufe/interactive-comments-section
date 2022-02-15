@@ -29,8 +29,9 @@ dialog {
   position: fixed;
   top: 30vh;
   width: 400px;
-  left: calc(50% - 15rem);
-  margin: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: var(--border-radius);
   padding: 32px;
