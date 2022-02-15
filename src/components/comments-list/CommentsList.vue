@@ -59,6 +59,7 @@
         class="replyCommentContainer"
         :currentUser="currentUser"
         button-text="Reply"
+        :user-to-reply="checkReplyContent"
       ></make-comment>
       <div class="childCommentContainer" v-if="comment.replies.length > 0">
         <div class="verticalLine"></div>
@@ -114,12 +115,14 @@
             class="replyCommentChildContainer"
             :currentUser="currentUser"
             :button-text="isMyAccount(reply?.user.username) ? 'Edit' : 'Reply'"
+            :user-to-reply="checkReplyContent"
           ></make-comment>
         </template>
       </div>
     </template>
   </div>
 </template>
+
 <script>
 import VoteComment from "./VoteComment.vue";
 import MakeComment from "./MakeComment.vue";
@@ -141,6 +144,16 @@ export default {
       isReplyActive: false,
       isModalVisible: false,
     };
+  },
+  computed: {
+    checkReplyContent() {
+      console.log(this.selectedReply);
+      if (this.selectedReply?.user?.username === this.currentUser?.username) {
+        return `@${this.selectedReply?.replyingTo} ${this.selectedReply?.content}`;
+      } else {
+        return `@${this.selectedReply?.user?.username}`;
+      }
+    },
   },
   methods: {
     checkCommentForm(commentId) {

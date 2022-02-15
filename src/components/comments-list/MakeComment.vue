@@ -2,11 +2,21 @@
   <div>
     <div class="make-comment desktop">
       <img :src="loadImage" alt="user" />
-      <textarea placeholder="Add a comment..."></textarea>
-      <base-button>{{ buttonText }}</base-button>
+      <textarea
+        placeholder="Add a comment..."
+        name="comment"
+        id="comment"
+        v-model.trim="enteredText"
+      ></textarea>
+      <base-button @click="submitForm">{{ buttonText }}</base-button>
     </div>
     <div class="make-comment mobile">
-      <textarea placeholder="Add a comment..."></textarea>
+      <textarea
+        placeholder="Add a comment..."
+        name="comment"
+        id="comment"
+        v-model.trim="enteredText"
+      ></textarea>
       <div class="mobile-comment-contet">
         <img :src="loadImage" alt="user" />
         <base-button>{{ buttonText }}</base-button>
@@ -24,6 +34,19 @@ export default {
     buttonText: {
       required: false,
       default: "Send",
+    },
+    userToReply: {
+      required: false,
+    },
+  },
+  data() {
+    return {
+      enteredText: this.userToReply,
+    };
+  },
+  methods: {
+    submitForm() {
+      console.log(this.enteredText);
     },
   },
   computed: {
@@ -67,6 +90,9 @@ textarea {
   padding-left: 15px;
   padding-top: 15px;
   resize: none;
+  color: var(--dark-blue);
+  line-height: 1.7;
+  padding-right: 10px;
 }
 textarea::-webkit-input-placeholder {
   color: var(--grayish-blue);
