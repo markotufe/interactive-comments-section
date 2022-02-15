@@ -151,7 +151,7 @@ export default {
       if (this.selectedReply?.user?.username === this.currentUser?.username) {
         return `@${this.selectedReply?.replyingTo} ${this.selectedReply?.content}`;
       } else {
-        return `@${this.selectedReply?.user?.username}`;
+        return `@${this.selectedReply?.user?.username} `;
       }
     },
   },
