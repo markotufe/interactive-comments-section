@@ -4,6 +4,20 @@
   </div>
 </template>
 
+<script>
+import { onAuthStateChanged } from "@firebase/auth";
+import { auth } from "./firebase/index";
+
+export default {
+  created() {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      unsub();
+    });
+  },
+};
+</script>
+
 <style>
 #app {
   background-color: var(--very-light-gray);
