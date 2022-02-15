@@ -46,4 +46,8 @@ textarea {
 textarea::-webkit-input-placeholder {
   color: var(--grayish-blue);
 }
+
+button:active {
+  background-color: var(--light-blue);
+}
 </style>

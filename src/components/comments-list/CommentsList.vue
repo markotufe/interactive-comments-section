@@ -249,8 +249,13 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+
 .replyContainer {
   display: flex;
+}
+
+.replyText:active {
+  color: var(--light-blue);
 }
 
 .username {
@@ -318,12 +323,21 @@ export default {
   margin-top: 1px;
   margin-left: 5px;
 }
+
+.deleteText:active {
+  color: var(--pale-red);
+}
+
 .editText {
   color: var(--primary-color);
   font-size: 15px;
   font-weight: bold;
   margin-top: 1px;
   margin-left: 5px;
+}
+
+.editText:active {
+  color: var(--light-blue);
 }
 
 .userBadge {
@@ -379,5 +393,13 @@ export default {
 
 .deleteButton {
   background-color: var(--soft-red) !important;
+}
+
+.deleteButton:active {
+  background-color: var(--pale-red) !important;
+}
+
+.cancelButton:active {
+  background-color: var(--light-gray) !important;
 }
 </style>
