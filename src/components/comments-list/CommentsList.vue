@@ -24,6 +24,12 @@
       <base-card class="commentCard">
         <div class="cardLeft">
           <vote-comment :comment-score="comment.score"></vote-comment>
+          <comment-list-actions
+            :is-my-account="checkReplyActions(comment?.user?.username)"
+            @set-selected-reply="setSelectedReply(comment)"
+            @toggle-modal="toggleModal"
+            class="mobileEditActions"
+          ></comment-list-actions>
         </div>
         <div class="cardRight">
           <div class="cardRightTop">
@@ -36,14 +42,12 @@
               <p class="username">{{ comment?.user?.username }}</p>
               <p class="createdAt">{{ comment?.createdAt }}</p>
             </div>
-            <div class="replyContainer" @click="setSelectedReply(comment)">
-              <img
-                class="replyImage"
-                src="../../assets/images/icon-reply.svg"
-                alt="reply"
-              />
-              <p class="replyText">Reply</p>
-            </div>
+            <comment-list-actions
+              :is-my-account="checkReplyActions(comment?.user?.username)"
+              @set-selected-reply="setSelectedReply(comment)"
+              @toggle-modal="toggleModal"
+              class="desktopEditActions"
+            ></comment-list-actions>
           </div>
           <div class="cardRightBottom">
             <p class="commentText parentCommentText">{{ comment.content }}</p>
@@ -62,6 +66,12 @@
           <base-card class="childCard commentCard" :style="childCard(index)">
             <div class="cardLeft">
               <vote-comment :comment-score="comment.score"></vote-comment>
+              <comment-list-actions
+                :is-my-account="checkReplyActions(reply?.user?.username)"
+                @set-selected-reply="setSelectedReply(reply)"
+                @toggle-modal="toggleModal"
+                class="mobileEditActions"
+              ></comment-list-actions>
             </div>
             <div class="cardRight">
               <div class="cardRightTop">
@@ -84,42 +94,12 @@
                   >
                   <p class="createdAt">{{ reply?.createdAt }}</p>
                 </div>
-                <div
-                  v-if="checkReplyActions(reply?.user?.username)"
-                  class="editDeleteContainer"
-                >
-                  <div class="editDeleteAction" @click="toggleModal">
-                    <img
-                      class="deleteIcon"
-                      src="../../assets/images/icon-delete.svg"
-                      alt="delete"
-                    />
-                    <p class="deleteText">Delete</p>
-                  </div>
-                  <div
-                    class="editDeleteAction"
-                    @click="setSelectedReply(reply)"
-                  >
-                    <img
-                      class="editIcon"
-                      src="../../assets/images/icon-edit.svg"
-                      alt="delete"
-                    />
-                    <p class="editText">Edit</p>
-                  </div>
-                </div>
-                <div
-                  class="replyContainer"
-                  v-else
-                  @click="setSelectedReply(reply)"
-                >
-                  <img
-                    class="replyImage"
-                    src="../../assets/images/icon-reply.svg"
-                    alt="reply"
-                  />
-                  <p class="replyText">Reply</p>
-                </div>
+                <comment-list-actions
+                  :is-my-account="checkReplyActions(reply?.user?.username)"
+                  @set-selected-reply="setSelectedReply(reply)"
+                  @toggle-modal="toggleModal"
+                  class="desktopEditActions"
+                ></comment-list-actions>
               </div>
               <div class="cardRightBottom">
                 <p class="commentText childCommentText">
@@ -143,11 +123,13 @@
 <script>
 import VoteComment from "../ui/VoteComment.vue";
 import MakeComment from "../MakeComment.vue";
+import CommentListActions from "./CommentListActions.vue";
 
 export default {
   components: {
     VoteComment,
     MakeComment,
+    CommentListActions,
   },
   props: ["comments", "currentUser"],
   data() {
@@ -250,14 +232,6 @@ export default {
   justify-content: space-between;
 }
 
-.replyContainer {
-  display: flex;
-}
-
-.replyText:active {
-  color: var(--light-blue);
-}
-
 .username {
   font-size: 14px;
   font-weight: bold;
@@ -278,66 +252,12 @@ export default {
   width: 95%;
 }
 
-.replyContainer {
-  cursor: pointer;
-}
-
-.replyImage {
-  width: 14px;
-  height: 14px;
-  margin-right: 5px;
-  margin-top: 2px;
-}
-
-.replyText {
-  color: var(--primary-color);
-  font-weight: bold;
-  font-size: 15px;
-}
 .cardRightBottom {
   margin-top: 12px;
 }
 
 .parentCommentText {
   width: 95%;
-}
-
-.editDeleteContainer {
-  display: flex;
-}
-
-.editDeleteAction {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.editDeleteAction:nth-child(1) {
-  margin-right: 23px;
-}
-
-.deleteText {
-  color: var(--soft-red);
-  font-size: 15px;
-  font-weight: bold;
-  margin-top: 1px;
-  margin-left: 5px;
-}
-
-.deleteText:active {
-  color: var(--pale-red);
-}
-
-.editText {
-  color: var(--primary-color);
-  font-size: 15px;
-  font-weight: bold;
-  margin-top: 1px;
-  margin-left: 5px;
-}
-
-.editText:active {
-  color: var(--light-blue);
 }
 
 .userBadge {
@@ -350,6 +270,7 @@ export default {
   width: 36px;
   height: 19px;
 }
+
 .replyCommentContainer {
   margin-top: 10px;
 }
@@ -403,6 +324,10 @@ export default {
   background-color: var(--light-gray) !important;
 }
 
+.mobileEditActions {
+  display: none !important;
+}
+
 @media only screen and (max-width: 480px) {
   .verticalLine {
     left: 5px;
@@ -425,6 +350,9 @@ export default {
   }
 
   .cardLeft {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex: 1;
     order: 2;
     margin-top: 15px;
@@ -434,6 +362,14 @@ export default {
     flex: 1;
     order: 1;
     margin-left: 0;
+  }
+
+  .mobileEditActions {
+    display: flex !important;
+  }
+
+  .desktopEditActions {
+    display: none !important;
   }
 }
 </style>
