@@ -1,4 +1,24 @@
 <template>
+  <teleport to="body">
+    <base-modal @close="toggleModal" :open="isModalVisible">
+      <div class="modalContent">
+        <h2 class="modalHeading">Delete comment</h2>
+        <p class="modalText">
+          Are you sure you want to delete this comment? This will remove the
+          comment and can’t be undone.
+        </p>
+      </div>
+
+      <div class="modalButtons">
+        <base-button @click="toggleModal" class="modalButton cancelButton">
+          No, cancel
+        </base-button>
+        <base-button @click="deleteComment" class="modalButton deleteButton">
+          Yes, delete
+        </base-button>
+      </div>
+    </base-modal>
+  </teleport>
   <div class="comments">
     <template v-for="comment in comments" :key="comment.id">
       <base-card class="commentCard">
@@ -68,7 +88,7 @@
                   v-if="checkReplyActions(reply?.user?.username)"
                   class="editDeleteContainer"
                 >
-                  <div class="editDeleteAction">
+                  <div class="editDeleteAction" @click="toggleModal">
                     <img
                       class="deleteIcon"
                       src="../../assets/images/icon-delete.svg"
@@ -135,6 +155,7 @@ export default {
       divHeight: 0,
       selectedReply: {},
       isReplyActive: false,
+      isModalVisible: false,
     };
   },
   methods: {
@@ -166,6 +187,12 @@ export default {
       if (!this.isReplyActive) {
         this.selectedReply = {};
       }
+    },
+    toggleModal() {
+      this.isModalVisible = !this.isModalVisible;
+    },
+    deleteComment() {
+      this.isModalVisible = !this.isModalVisible;
     },
   },
 };
@@ -316,5 +343,41 @@ export default {
 .replyCommentChildContainer {
   margin-top: 10px;
   margin-left: 80px;
+}
+
+.modalHeading {
+  font-size: 20px;
+  color: var(--dark-blue);
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.modalText {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.7;
+  width: 85%;
+  color: var(--grayish-blue);
+}
+
+.modalButtons {
+  margin-top: 20px;
+}
+
+.modalButton {
+  width: 161px;
+  font-size: 14px;
+}
+
+.modalButton:nth-child(1) {
+  margin-right: 10px;
+}
+
+.cancelButton {
+  background-color: var(--grayish-blue) !important;
+}
+
+.deleteButton {
+  background-color: var(--soft-red) !important;
 }
 </style>
