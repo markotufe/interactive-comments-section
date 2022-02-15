@@ -28,6 +28,7 @@
             :is-my-account="checkReplyActions(comment?.user?.username)"
             @set-selected-reply="setSelectedReply(comment)"
             @toggle-modal="toggleModal"
+            @edit-my-comment="checkIsEditingComment(comment)"
             class="mobileEditActions"
           ></comment-list-actions>
         </div>
@@ -46,6 +47,7 @@
               :is-my-account="checkReplyActions(comment?.user?.username)"
               @set-selected-reply="setSelectedReply(comment)"
               @toggle-modal="toggleModal"
+              @edit-my-comment="checkIsEditingComment(comment)"
               class="desktopEditActions"
             ></comment-list-actions>
           </div>
@@ -70,6 +72,7 @@
               <comment-list-actions
                 :is-my-account="checkReplyActions(reply?.user?.username)"
                 @set-selected-reply="setSelectedReply(reply)"
+                @edit-my-comment="checkIsEditingComment(reply)"
                 @toggle-modal="toggleModal"
                 class="mobileEditActions"
               ></comment-list-actions>
