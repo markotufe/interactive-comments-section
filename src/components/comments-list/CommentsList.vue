@@ -402,4 +402,38 @@ export default {
 .cancelButton:active {
   background-color: var(--light-gray) !important;
 }
+
+@media only screen and (max-width: 480px) {
+  .verticalLine {
+    left: 5px;
+  }
+
+  .childCard {
+    margin-left: 20px;
+  }
+
+  .replyContainer {
+    display: none;
+  }
+
+  .editDeleteContainer {
+    display: none;
+  }
+
+  .commentCard {
+    flex-direction: column;
+  }
+
+  .cardLeft {
+    flex: 1;
+    order: 2;
+    margin-top: 15px;
+  }
+
+  .cardRight {
+    flex: 1;
+    order: 1;
+    margin-left: 0;
+  }
+}
 </style>

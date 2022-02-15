@@ -32,4 +32,16 @@ span {
   color: var(--primary-color);
   font-weight: bold;
 }
+
+@media only screen and (max-width: 480px) {
+  div {
+    flex-direction: row;
+    height: 40px;
+    width: 100px;
+  }
+
+  img {
+    margin: 15px 10px;
+  }
+}
 </style>
