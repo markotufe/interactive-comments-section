@@ -19,7 +19,7 @@
       ></textarea>
       <div class="mobile-comment-contet">
         <img :src="loadImage" alt="user" />
-        <base-button>{{ buttonText }}</base-button>
+        <base-button @click="submitForm">{{ buttonText }}</base-button>
       </div>
     </div>
   </div>

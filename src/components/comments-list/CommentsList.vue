@@ -202,6 +202,7 @@ export default {
     setSelectedReply(replyData) {
       this.selectedReply = replyData;
       this.isReplyActive = !this.isReplyActive;
+      this.isEditingComment = false;
       if (!this.isReplyActive) {
         this.selectedReply = {};
       }
@@ -214,6 +215,7 @@ export default {
     },
     checkIsEditingComment(replyData) {
       this.selectedReply = replyData;
+      this.isReplyActive = false;
       this.isEditingComment = !this.isEditingComment;
       this.enteredText = `@${replyData?.replyingTo} ${replyData?.content}`;
     },
