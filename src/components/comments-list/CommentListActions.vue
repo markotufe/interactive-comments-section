@@ -1,55 +1,55 @@
 <template>
-  <div v-if="isMyAccount" class="editDeleteContainer">
-    <div class="editDeleteAction" @click="$emit('toggleModal')">
+  <div v-if="isMyAccount" class="edit-delete-container">
+    <div class="edit-delete-action" @click="$emit('toggle-modal')">
       <img
-        class="deleteIcon"
+        class="delete-icon"
         src="../../assets/images/icon-delete.svg"
-        alt="delete"
+        alt="delete icon"
       />
-      <p class="deleteText">Delete</p>
+      <p class="delete-text">Delete</p>
     </div>
-    <div class="editDeleteAction" @click="$emit('setSelectedReply')">
+    <div class="edit-delete-action" @click="$emit('set-selected-reply')">
       <img
-        class="editIcon"
+        class="edit-icon"
         src="../../assets/images/icon-edit.svg"
-        alt="delete"
+        alt="edit icon"
       />
-      <p class="editText">Edit</p>
+      <p class="edit-text">Edit</p>
     </div>
   </div>
-  <div class="replyContainer" v-else @click="$emit('setSelectedReply')">
+  <div class="reply-container" v-else @click="$emit('set-selected-reply')">
     <img
-      class="replyImage"
+      class="reply-icon"
       src="../../assets/images/icon-reply.svg"
-      alt="reply"
+      alt="reply icon"
     />
-    <p class="replyText">Reply</p>
+    <p class="reply-text">Reply</p>
   </div>
 </template>
 
 <script>
 export default {
   props: ["isMyAccount"],
-  emits: ["setSelectedReply", "toggleModal"],
+  emits: ["set-selected-reply", "toggle-modal"],
 };
 </script>
 
 <style scoped>
-.editDeleteContainer {
+.edit-delete-container {
   display: flex;
 }
 
-.editDeleteAction {
+.edit-delete-action {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.editDeleteAction:nth-child(1) {
+.edit-delete-action:nth-child(1) {
   margin-right: 23px;
 }
 
-.deleteText {
+.delete-text {
   color: var(--soft-red);
   font-size: 15px;
   font-weight: bold;
@@ -57,11 +57,11 @@ export default {
   margin-left: 5px;
 }
 
-.deleteText:active {
+.delete-text:active {
   color: var(--pale-red);
 }
 
-.editText {
+.edit-text {
   color: var(--primary-color);
   font-size: 15px;
   font-weight: bold;
@@ -69,29 +69,29 @@ export default {
   margin-left: 5px;
 }
 
-.editText:active {
+.edit-text:active {
   color: var(--light-blue);
 }
 
-.replyContainer {
+.reply-container {
   cursor: pointer;
   display: flex;
 }
 
-.replyImage {
+.reply-icon {
   width: 14px;
   height: 14px;
   margin-right: 5px;
   margin-top: 2px;
 }
 
-.replyText {
+.reply-text {
   color: var(--primary-color);
   font-weight: bold;
   font-size: 15px;
 }
 
-.replyText:active {
+.reply-text:active {
   color: var(--light-blue);
 }
 </style>
