@@ -122,7 +122,7 @@
 </template>
 <script>
 import VoteComment from "../ui/VoteComment.vue";
-import MakeComment from "../MakeComment.vue";
+import MakeComment from "./MakeComment.vue";
 import CommentListActions from "./CommentListActions.vue";
 
 export default {
@@ -379,6 +379,11 @@ export default {
 
   .modalButton:nth-child(1) {
     margin-right: 5px;
+  }
+
+  .replyCommentChildContainer {
+    margin-top: 10px;
+    margin-left: 20px;
   }
 }
 </style>

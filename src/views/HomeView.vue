@@ -4,12 +4,15 @@
       :comments="this.comments"
       :current-user="this.currentUser"
     ></comments-list>
-    <make-comment :current-user="this.currentUser"></make-comment>
+    <make-comment
+      button-text="Send"
+      :current-user="this.currentUser"
+    ></make-comment>
   </div>
 </template>
 
 <script>
-import MakeComment from "../components/MakeComment.vue";
+import MakeComment from "../components/comments-list/MakeComment.vue";
 import CommentsList from "../components/comments-list/CommentsList.vue";
 import dummyData from "../assets/data.json";
 
