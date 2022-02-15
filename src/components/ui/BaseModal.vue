@@ -58,4 +58,13 @@ dialog {
     transform: translateY(0) scale(1);
   }
 }
+
+@media only screen and (max-width: 480px) {
+  dialog {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 343px;
+  }
+}
 </style>

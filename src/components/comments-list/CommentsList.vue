@@ -297,6 +297,7 @@ export default {
 
 .modalButtons {
   margin-top: 20px;
+  display: flex;
 }
 
 .modalButton {
@@ -370,6 +371,14 @@ export default {
 
   .desktopEditActions {
     display: none !important;
+  }
+
+  .modalButton {
+    width: 138px;
+  }
+
+  .modalButton:nth-child(1) {
+    margin-right: 5px;
   }
 }
 </style>
