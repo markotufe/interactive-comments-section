@@ -15,7 +15,9 @@ p,
 span,
 button,
 textarea,
-a {
+a,
+input,
+label {
   font-family: Rubik, sans-serif;
 }
 
@@ -29,6 +31,10 @@ textarea {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
+}
+
+button {
+  cursor: pointer;
 }
 
 @font-face {

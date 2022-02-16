@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>Hello, I'm Login!</h1>
-    <login-form></login-form>
+    <login-form @submit-from="onSubmit"></login-form>
   </div>
 </template>
 
@@ -11,6 +10,17 @@ import LoginForm from "../components/auth/LoginForm.vue";
 export default {
   components: {
     LoginForm,
+  },
+  methods: {
+    async onSubmit(data) {
+      try {
+        await this.$store.dispatch("login", data);
+        this.$router.push("/home");
+      } catch (error) {
+        // errorMessage.value = error;
+        console.log(error);
+      }
+    },
   },
 };
 </script>

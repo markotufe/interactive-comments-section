@@ -16,4 +16,6 @@ app.component("base-modal", BaseModal);
 app.use(router);
 app.use(store);
 
-app.mount("#app");
+router.isReady().then(function () {
+  app.mount("#app");
+});

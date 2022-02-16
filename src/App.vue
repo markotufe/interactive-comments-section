@@ -5,13 +5,14 @@
 </template>
 
 <script>
-import { onAuthStateChanged } from "@firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/index";
 
 export default {
-  created() {
+  mounted() {
     const unsub = onAuthStateChanged(auth, (user) => {
-      console.log(user);
+      this.$store.commit("setAuthIsReady", true);
+      this.$store.commit("setUser", user);
       unsub();
     });
   },

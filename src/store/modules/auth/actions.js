@@ -1,5 +1,18 @@
+import { auth } from "../../../firebase/index";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 export default {
-  login(context) {
-    context.commit("setUser");
+  async login(context, payload) {
+    const response = await signInWithEmailAndPassword(
+      auth,
+      payload.email,
+      payload.password
+    );
+
+    if (response) {
+      context.commit("setUser", response.user);
+    } else {
+      throw new Error("Could not complete login");
+    }
   },
 };

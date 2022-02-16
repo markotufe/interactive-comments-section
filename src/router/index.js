@@ -7,6 +7,10 @@ import store from "../store/index";
 const routes = [
   {
     path: "/",
+    redirect: "/home",
+  },
+  {
+    path: "/home",
     name: "home",
     component: HomeView,
     meta: {
@@ -17,6 +21,9 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+    meta: {
+      requiresUnauth: true,
+    },
   },
   {
     path: "/:notFound(.*)",
@@ -26,13 +33,15 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 
 router.beforeEach(function (to, from, next) {
-  if (to.meta.requiresAuth && !store.getters.getUser) {
+  if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
     next("/login");
+  } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
+    next("/home");
   } else {
     next();
   }

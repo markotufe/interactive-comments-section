@@ -3,10 +3,10 @@ import authActions from "./actions";
 import authGetters from "./getters";
 
 export default {
-  namespaced: true,
   state() {
     return {
       user: null,
+      authIsReady: false,
     };
   },
   mutations: authMutations,
