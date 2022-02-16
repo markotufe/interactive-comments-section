@@ -220,7 +220,6 @@ export default {
       this.enteredText = `@${replyData?.replyingTo} ${replyData?.content}`;
     },
     submitForm() {
-      console.log(this.enteredText);
       this.isEditingComment = false;
     },
   },

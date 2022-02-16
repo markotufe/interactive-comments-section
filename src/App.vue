@@ -12,9 +12,17 @@ export default {
   mounted() {
     const unsub = onAuthStateChanged(auth, (user) => {
       this.$store.commit("setAuthIsReady", true);
-      this.$store.commit("setUser", user);
+
+      const userData = {
+        ...user,
+        displayName: user?.email?.split("@")[0],
+      };
+
+      this.$store.commit("setUser", userData);
+
       unsub();
     });
+    console.log(this.$store.getters.getGlobalState);
   },
 };
 </script>

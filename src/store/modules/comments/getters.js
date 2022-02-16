@@ -1,6 +1,5 @@
 export default {
-  comments(state, getters, rootState, rootGetters) {
-    console.log(rootState, rootGetters);
+  comments(state) {
     return state.commentsList;
   },
 };

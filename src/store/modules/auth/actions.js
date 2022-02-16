@@ -14,7 +14,12 @@ export default {
         payload.password
       );
 
-      context.commit("setUser", response.user);
+      const userData = {
+        ...response.user,
+        displayName: response.user?.email?.split("@")[0],
+      };
+
+      context.commit("setUser", userData);
       router.push("/home");
     } catch (error) {
       let tempErrorMessage = "";
