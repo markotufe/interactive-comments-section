@@ -37,7 +37,8 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(function (to, from, next) {
+const waitForStorageToBeReady = async (to, from, next) => {
+  await store.restored;
   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
     next("/login");
   } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
@@ -45,6 +46,8 @@ router.beforeEach(function (to, from, next) {
   } else {
     next();
   }
-});
+};
+
+router.beforeEach(waitForStorageToBeReady);
 
 export default router;
