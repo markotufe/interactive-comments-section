@@ -1,9 +1,14 @@
 export default {
   setUser(state, payload) {
     state.user = payload;
-    console.log("User state changed:", state.user);
   },
   setAuthIsReady(state, payload) {
     state.authIsReady = payload;
+  },
+  setIsLoading(state, payload) {
+    state.isLoading = payload;
+  },
+  setErrorMessage(state, payload) {
+    state.errorMessage = payload;
   },
 };

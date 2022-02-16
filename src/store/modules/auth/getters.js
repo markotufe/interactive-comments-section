@@ -8,4 +8,10 @@ export default {
   isAuthenticated(state) {
     return !!state.user;
   },
+  isLoading(state) {
+    return state.isLoading;
+  },
+  getErrorMessage(state) {
+    return state.errorMessage;
+  },
 };

@@ -18,12 +18,20 @@
         v-model.trim="enteredPassword"
       />
     </div>
-    <button>Login</button>
+    <base-error-message :error-message="showErrorMessage"></base-error-message>
+    <button :disabled="isButtonDisabled">
+      {{ isLoading ? "Validating..." : "Login" }}
+    </button>
   </form>
 </template>
 
 <script>
+import BaseErrorMessage from "../ui/BaseErrorMessage.vue";
+
 export default {
+  components: {
+    BaseErrorMessage,
+  },
   emits: ["submit-from"],
   data() {
     return {
@@ -37,6 +45,17 @@ export default {
         email: this.enteredEmail,
         password: this.enteredPassword,
       });
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters.isLoading;
+    },
+    isButtonDisabled() {
+      return this.isLoading || !this.enteredEmail || !this.enteredPassword;
+    },
+    showErrorMessage() {
+      return this.$store.getters.getErrorMessage;
     },
   },
 };
@@ -80,5 +99,10 @@ button {
   background-color: var(--primary-color);
   color: var(--white);
   margin-top: 10px;
+}
+
+button:disabled {
+  cursor: pointer;
+  background-color: var(--grayish-blue);
 }
 </style>

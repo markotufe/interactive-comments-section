@@ -12,14 +12,8 @@ export default {
     LoginForm,
   },
   methods: {
-    async onSubmit(data) {
-      try {
-        await this.$store.dispatch("login", data);
-        this.$router.push("/home");
-      } catch (error) {
-        // errorMessage.value = error;
-        console.log(error);
-      }
+    onSubmit(data) {
+      this.$store.dispatch("login", data);
     },
   },
 };

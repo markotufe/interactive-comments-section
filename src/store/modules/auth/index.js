@@ -7,6 +7,8 @@ export default {
     return {
       user: null,
       authIsReady: false,
+      isLoading: false,
+      errorMessage: "",
     };
   },
   mutations: authMutations,
