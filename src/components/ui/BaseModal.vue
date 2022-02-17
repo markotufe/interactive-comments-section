@@ -60,7 +60,7 @@ dialog {
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
   dialog {
     left: 0;
     right: 0;
