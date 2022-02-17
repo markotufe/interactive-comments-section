@@ -14,11 +14,6 @@ const store = createStore({
     comments: commentsModule,
   },
   plugins: [vuexLocal.plugin],
-  getters: {
-    getGlobalState(state) {
-      return state;
-    },
-  },
 });
 
 export default store;

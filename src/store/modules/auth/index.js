@@ -6,7 +6,6 @@ export default {
   state() {
     return {
       user: null,
-      authIsReady: false,
       isLoading: false,
       errorMessage: "",
     };
