@@ -33,7 +33,7 @@ span {
   font-weight: bold;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
   div {
     flex-direction: row;
     height: 40px;
